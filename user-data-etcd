@@ -1,0 +1,17 @@
+#cloud-config
+
+---
+coreos:
+  etcd2:
+    advertise-client-urls: http://$public_ipv4:2379
+    initial-advertise-peer-urls: http://$public_ipv4:2380
+    listen-client-urls: http://0.0.0.0:2379
+    listen-peer-urls: http://$public_ipv4:2380
+    discovery: https://discovery.etcd.io/fcd944b9bf57167fd99fd8a0ebaf0348
+  fleet:
+    metadata: role=services
+  units:
+  - name: etcd2.service
+    command: start
+  - name: fleet.service
+    command: start

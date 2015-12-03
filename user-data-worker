@@ -1,0 +1,24 @@
+#cloud-config
+
+---
+coreos:
+  etcd2:
+    discovery: https://discovery.etcd.io/fcd944b9bf57167fd99fd8a0ebaf0348
+    listen-client-urls: http://0.0.0.0:2379
+  fleet:
+    etcd_servers: http://localhost:2379
+    metadata: role=workers
+  flannel:
+    interface: $public_ipv4
+  units:
+  - name: etcd2.service
+    command: start
+  - name: fleet.service
+    command: start
+  - name: flanneld.service
+    drop-ins:
+    - name: 50-network-config.conf
+      content: |
+        [Service]
+        ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.1.0.0/16" }'
+    command: start
