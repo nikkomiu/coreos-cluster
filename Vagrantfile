@@ -24,7 +24,6 @@ $num_etcd = 2
 $num_controller = 1
 $num_worker = 3
 
-# Testing token
 $new_discovery = "https://discovery.etcd.io/new?size=#{$num_etcd}"
 $token = nil
 
