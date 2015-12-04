@@ -98,14 +98,11 @@ Vagrant.configure("2") do |config|
   config.vm.define vm_name = "dev" do |config|
     config.vm.box = "ubuntu-trusty64-gui"
     config.vm.box_url = "https://vagrantcloud.com/chad-thompson/boxes/ubuntu-trusty64-gui/versions/1.0/providers/virtualbox.box"
+    config.vm.network :private_network, ip: "172.17.8.100"
 
     config.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--memory", $vm_memory]
       vb.gui = true
-    end
-
-    config.vm.define "dev", primary: true do |dev|
-      dev.vm.network :private_network, ip: "172.17.8.100"
     end
   end
 
