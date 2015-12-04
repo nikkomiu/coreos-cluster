@@ -93,6 +93,18 @@ Vagrant.configure("2") do |config|
   update_user_data ETCD_CONFIG_PATH
   update_user_data CONTROLLER_CONFIG_PATH
   update_user_data WORKER_CONFIG_PATH
+  
+  # Setup dev box
+  config.vm.define vm_name = "dev" do |config|
+    config.vm.box = "ubuntu-trusty64-gui"
+    config.vm.box_url = "https://vagrantcloud.com/chad-thompson/boxes/ubuntu-trusty64-gui/versions/1.0/providers/virtualbox.box"
+    config.vm.network :private_network, ip: "172.17.8.100"
+
+    config.vm.provider :virtualbox do |vb|
+      vb.customize ["modifyvm", :id, "--memory", $vm_memory]
+      vb.gui = true
+    end
+  end
 
   # Setup etcd instances
   (1..$num_etcd).each do |i|
