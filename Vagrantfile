@@ -46,11 +46,9 @@ def get_token
 end
 
 def update_user_data yaml_file
-  return if !ARGV[0].eql? 'up'
+  return unless ARGV[0].eql? 'up'
 
-  if !File.exists? yaml_file
-    abort("File '#{yaml_file}' not found!")
-  end
+  abort("File '#{yaml_file}' not found!") unless File.exists? yaml_file
 
   require 'yaml'
 
@@ -80,7 +78,7 @@ Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
   config.vm.box = "coreos-#{$core_channel}"
-  config.vm.box_version = $core_version if $core_version != "current"
+  config.vm.box_version = $core_version unless $core_version == "current"
 
   config.vm.box_url = "http://#{$core_channel}.release.core-os.net/amd64-usr/#{$core_version}/coreos_production_vagrant.json"
 
