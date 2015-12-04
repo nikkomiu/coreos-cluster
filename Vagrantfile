@@ -5,10 +5,10 @@ require 'fileutils'
 
 Vagrant.require_version ">=1.6.0"
 
-ETCD_CONFIG_PATH = File.join(File.dirname(__FILE__), "user-data-etcd")
-CONTROLLER_CONFIG_PATH = File.join(File.dirname(__FILE__), "user-data-controller")
-WORKER_CONFIG_PATH = File.join(File.dirname(__FILE__), "user-data-worker")
-CONFIG = File.join(File.dirname(__FILE__), "config.rb")
+ETCD_CONFIG_PATH = File.join(File.dirname(__FILE__), "config/user-data-etcd")
+CONTROLLER_CONFIG_PATH = File.join(File.dirname(__FILE__), "config/user-data-controller")
+WORKER_CONFIG_PATH = File.join(File.dirname(__FILE__), "config/user-data-worker")
+CONFIG = File.join(File.dirname(__FILE__), "config/config.rb")
 
 # The user data config files must exist
 abort("CoreOS etcd config not found!") unless File.exists?(ETCD_CONFIG_PATH)
