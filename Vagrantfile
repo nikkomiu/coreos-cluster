@@ -16,8 +16,6 @@ abort("Kubernetes controller config not found!") unless File.exists?(CONTROLLER_
 abort("Kubernetes worker config not found!") unless File.exists?(WORKER_CONFIG_PATH)
 
 # --- DEFAULT CONFIG PARAMETERS ---
-$client_system = false
-
 $vm_gui = false
 $vm_memory = 512
 $vm_cpus = 1
@@ -77,27 +75,6 @@ def generic_vm_config config
 end
 
 Vagrant.configure("2") do |config|
-  # Setup Client System
-  if $client_system == true
-    config.vm.define vm_name = "client-system" do |config|
-      config.vm.box = "precise64"
-
-      config.vm.provider :virtualbox do |vbox|
-        vbox.gui = true
-        vbox.memory = $vm_memory
-        vbox.cpus = $vm_cpus
-      end
-
-      ip = "172.17.8.100"
-      config.vm.network :private_network, ip: ip
-
-      config.vm.provision :file, source: 'bin/generate-ssl.sh', destination: '/tmp/generate-ssl.sh'
-      config.vm.provision :file, source: 'bin/vkubectl', destination: '/tmp/vkubectl'
-      config.vm.provision :file, source: 'config/openssl.cnf', destination: '/tmp/openssl.cnf'
-      config.vm.provision :shell, path: "client_setup.sh", privileged: true
-    end
-  end
-
   config.ssh.insert_key = false
 
   config.vm.box = "coreos-#{$core_channel}"
