@@ -1,3 +1,6 @@
+# Use this if you are on a windows system
+#$client_system = false
+
 #$vm_gui = false
 #$vm_memory = 512
 #$vm_cpus = 1
