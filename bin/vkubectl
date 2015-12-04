@@ -2,13 +2,11 @@
 
 SERVER_ADDRESS="https://172.17.4.101"
 
-CLIENT_CA="../ssl/ca.pem"
-CLIENT_CER="../ssl/admin.pem"
-CLIENT_KEY="../ssl/admin-key.pem"
+SSL_DIR="../ssl/"
 
 eval "/usr/local/bin/kubectl \
  --server=$SERVER_ADDRESS \
- --certificate-authority=$CLIENT_CA \
- --client-certificate=$CLIENT_CER \
- --client-key=$CLIENT_KEY \
+ --certificate-authority=$SSL_DIR/ca.pem \
+ --client-certificate=$SSL_DIR/admin.pem \
+ --client-key=$SSL_DIR/admin-key.pem \
  $@"
