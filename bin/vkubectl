@@ -1,0 +1,14 @@
+#!/bin/bash
+
+SERVER_ADDRESS="https://172.17.4.101"
+
+CLIENT_CA="../ssl/ca.pem"
+CLIENT_CER="../ssl/admin.pem"
+CLIENT_KEY="../ssl/admin-key.pem"
+
+eval "/usr/local/bin/kubectl \
+ --server=$SERVER_ADDRESS \
+ --certificate-authority=$CLIENT_CA \
+ --client-certificate=$CLIENT_CER \
+ --client-key=$CLIENT_KEY \
+ $@"
