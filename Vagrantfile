@@ -138,10 +138,4 @@ Vagrant.configure("2") do |config|
       config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
     end
   end
-
-  # Set default value back in user data files
-  $token = "https://discovery.etcd.io/<token>"
-  update_user_data ETCD_CONFIG_PATH
-  update_user_data CONTROLLER_CONFIG_PATH
-  update_user_data WORKER_CONFIG_PATH
 end

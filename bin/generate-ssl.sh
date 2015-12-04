@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SSL_DIR="../ssl"
-
 # CA Certificate
 openssl genrsa -out ca-key.pem 2048
 openssl req -x509 -new -nodes -key ca-key.pem -days 10000 -out ca.pem -subj "/CN=kube-ca"
@@ -18,5 +16,5 @@ openssl x509 -req -in worker.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -o
 
 # Cluster Admin Keypair
 openssl genrsa -out admin-key.pem 2048
-$ openssl req -new -key admin-key.pem -out admin.csr -subj "/CN=kube-admin"
-$ openssl x509 -req -in admin.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out admin.pem -days 1825
+openssl req -new -key admin-key.pem -out admin.csr -subj "/CN=kube-admin"
+openssl x509 -req -in admin.csr -CA ca.pem -CAkey ca-key.pem -CAcreateserial -out admin.pem -days 1825
