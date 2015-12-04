@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SERVER_ADDRESS="https://172.17.4.101"
+SERVER_ADDRESS="https://172.17.4.151"
 
 SSL_DIR="../ssl/"
 
