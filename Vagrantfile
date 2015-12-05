@@ -22,7 +22,7 @@ $vm_cpus = 1
 
 $num_etcd = 2
 $num_controller = 1
-$num_worker = 3
+$num_worker = 4
 
 $new_discovery = "https://discovery.etcd.io/new?size=#{$num_etcd}"
 $token = nil
