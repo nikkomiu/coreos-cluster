@@ -10,6 +10,7 @@ coreos:
     metadata: role=controllers
   flannel:
     interface: $public_ipv4
+    etcd_endpoints: http://127.0.0.1:2379
   units:
   - name: etcd2.service
     command: start
