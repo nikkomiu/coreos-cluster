@@ -102,6 +102,9 @@ Vagrant.configure("2") do |config|
 
     generic_vm_config config
 
+    config.vm.provision :file, source: 'bin/generate-ssl.sh', destination: '/tmp/generate-ssl'
+    config.vm.provision :shell, inline: 'mv /tmp/generate-ssl /usr/local/bin/generate-ssl && chmod +x /usr/local/bin/generate-ssl', privileged: true
+
     config.vm.provider :virtualbox do |vbox|
       vbox.gui = true
     end
