@@ -23,6 +23,7 @@ case "$(uname -s)" in
      ;;
 esac
 
+mkdir -p $SSL_DIR
 cp "$CONFIG_DIR/openssl.cnf" "$SSL_DIR/openssl.cnf"
 cd $SSL_DIR
 
