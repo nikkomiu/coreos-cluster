@@ -95,20 +95,20 @@ Vagrant.configure("2") do |config|
   update_user_data WORKER_CONFIG_PATH
 
   # Setup client box
-  config.vm.define vm_name = "client" do |config|
-    config.vm.box = "ubuntu-trusty64-gui"
-    config.vm.box_url = "https://vagrantcloud.com/chad-thompson/boxes/ubuntu-trusty64-gui/versions/1.0/providers/virtualbox.box"
-    config.vm.network :private_network, ip: "172.17.8.100"
+#  config.vm.define vm_name = "client" do |config|
+#    config.vm.box = "ubuntu-trusty64-gui"
+#    config.vm.box_url = "https://vagrantcloud.com/chad-thompson/boxes/ubuntu-trusty64-gui/versions/1.0/providers/virtualbox.box"
+#    config.vm.network :private_network, ip: "172.17.8.100"
 
-    generic_vm_config config
+#    generic_vm_config config
 
-    config.vm.provision :file, source: 'bin/generate-ssl.sh', destination: '/tmp/generate-ssl'
-    config.vm.provision :shell, inline: 'mv /tmp/generate-ssl /usr/local/bin/generate-ssl && chmod +x /usr/local/bin/generate-ssl', privileged: true
+#    config.vm.provision :file, source: 'bin/generate-ssl.sh', destination: '/tmp/generate-ssl'
+#    config.vm.provision :shell, inline: 'mv /tmp/generate-ssl /usr/local/bin/generate-ssl && chmod +x /usr/local/bin/generate-ssl', privileged: true
 
-    config.vm.provider :virtualbox do |vbox|
-      vbox.gui = true
-    end
-  end
+#    config.vm.provider :virtualbox do |vbox|
+#      vbox.gui = true
+#    end
+#  end
 
   # Setup etcd instances
   (1..$num_etcd).each do |i|
