@@ -66,14 +66,6 @@ def update_user_data yaml_file
   File.open(yaml_file, 'w') { |file| file.write("#cloud-config\n\n#{contents}") }
 end
 
-def generic_vm_config config
-  config.vm.provider :virtualbox do |vbox|
-    vbox.gui = $vm_gui
-    vbox.memory = $vm_memory
-    vbox.cpus = $vm_cpus
-  end
-end
-
 Vagrant.configure("2") do |config|
   config.ssh.insert_key = false
 
@@ -94,28 +86,16 @@ Vagrant.configure("2") do |config|
   update_user_data CONTROLLER_CONFIG_PATH
   update_user_data WORKER_CONFIG_PATH
 
-  # Setup client box
-#  config.vm.define vm_name = "client" do |config|
-#    config.vm.box = "ubuntu-trusty64-gui"
-#    config.vm.box_url = "https://vagrantcloud.com/chad-thompson/boxes/ubuntu-trusty64-gui/versions/1.0/providers/virtualbox.box"
-#    config.vm.network :private_network, ip: "172.17.8.100"
-
-#    generic_vm_config config
-
-#    config.vm.provision :file, source: 'bin/generate-ssl.sh', destination: '/tmp/generate-ssl'
-#    config.vm.provision :shell, inline: 'mv /tmp/generate-ssl /usr/local/bin/generate-ssl && chmod +x /usr/local/bin/generate-ssl', privileged: true
-
-#    config.vm.provider :virtualbox do |vbox|
-#      vbox.gui = true
-#    end
-#  end
-
   # Setup etcd instances
   (1..$num_etcd).each do |i|
     config.vm.define vm_name = "etcd-#{i}" do |config|
       config.vm.hostname = vm_name
 
-      generic_vm_config config
+      config.vm.provider :virtualbox do |vbox|
+        vbox.gui = $vm_gui
+        vbox.memory = $vm_memory
+        vbox.cpus = $vm_cpus
+      end
 
       ip = "172.17.8.#{i+100}"
       config.vm.network :private_network, ip: ip
@@ -130,10 +110,15 @@ Vagrant.configure("2") do |config|
     config.vm.define vm_name = "controller-#{i}" do |config|
       config.vm.hostname = vm_name
 
-      generic_vm_config config
+      config.vm.provider :virtualbox do |vbox|
+        vbox.gui = $vm_gui
+        vbox.memory = ($vm_memory * 2)
+        vbox.cpus = $vm_cpus
+      end
 
       ip = "172.17.8.#{i+150}"
       config.vm.network :private_network, ip: ip
+      config.vm.network :forwarded_port, guest: 443, host: 443
 
       config.vm.provision :file, :source => "#{CONTROLLER_CONFIG_PATH}", :destination => "/tmp/vagrantfile-user-data"
       config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
@@ -145,7 +130,11 @@ Vagrant.configure("2") do |config|
     config.vm.define vm_name = "worker-#{i}" do |config|
       config.vm.hostname = vm_name
 
-      generic_vm_config config
+      config.vm.provider :virtualbox do |vbox|
+        vbox.gui = $vm_gui
+        vbox.memory = $vm_memory
+        vbox.cpus = $vm_cpus
+      end
 
       ip = "172.17.8.#{i+200}"
       config.vm.network :private_network, ip: ip
