@@ -9,5 +9,5 @@ subjectAltName = @alt_names
 [alt_names]
 DNS.1 = kubernetes
 DNS.2 = kubernetes.default
-IP.1 = 10.1.0.1
+IP.1 = 10.3.0.1
 IP.2 = 172.17.8.151
