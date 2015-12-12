@@ -112,7 +112,7 @@ Vagrant.configure("2") do |config|
 
       config.vm.provider :virtualbox do |vbox|
         vbox.gui = $vm_gui
-        vbox.memory = ($vm_memory * 2)
+        vbox.memory = ($vm_memory * 3)
         vbox.cpus = $vm_cpus
       end
 
