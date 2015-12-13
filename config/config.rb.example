@@ -1,6 +1,11 @@
 #$vm_gui = false
-#$vm_memory = 512
-#$vm_cpus = 1
+
+#$etcd_memory = 512
+#$etcd_cpus = 1
+#$controller_memory = 512
+#$controller_cpus = 1
+#$worker_memory = 512
+#$worker_cpus = 1
 
 #$num_etcd = 2
 #$num_controller = 1

@@ -17,8 +17,13 @@ abort("Kubernetes worker config not found!") unless File.exists?(WORKER_CONFIG_P
 
 # --- DEFAULT CONFIG PARAMETERS ---
 $vm_gui = false
-$vm_memory = 512
-$vm_cpus = 1
+
+$etcd_memory = 512
+$etcd_cpus = 1
+$controller_memory = 512
+$controller_cpus = 1
+$worker_memory = 512
+$worker_cpus = 1
 
 $num_etcd = 2
 $num_controller = 1
@@ -93,8 +98,8 @@ Vagrant.configure("2") do |config|
 
       config.vm.provider :virtualbox do |vbox|
         vbox.gui = $vm_gui
-        vbox.memory = $vm_memory
-        vbox.cpus = $vm_cpus
+        vbox.memory = $etcd_memory
+        vbox.cpus = $etcd_cpus
       end
 
       ip = "172.17.8.#{i+100}"
@@ -112,8 +117,8 @@ Vagrant.configure("2") do |config|
 
       config.vm.provider :virtualbox do |vbox|
         vbox.gui = $vm_gui
-        vbox.memory = ($vm_memory * 3)
-        vbox.cpus = $vm_cpus
+        vbox.memory = $controller_memory
+        vbox.cpus = $controller_cpus
       end
 
       ip = "172.17.8.#{i+150}"
@@ -132,8 +137,8 @@ Vagrant.configure("2") do |config|
 
       config.vm.provider :virtualbox do |vbox|
         vbox.gui = $vm_gui
-        vbox.memory = $vm_memory
-        vbox.cpus = $vm_cpus
+        vbox.memory = $worker_memory
+        vbox.cpus = $worker_cpus
       end
 
       ip = "172.17.8.#{i+200}"
