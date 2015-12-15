@@ -20,9 +20,9 @@ $vm_gui = false
 
 $etcd_memory = 512
 $etcd_cpus = 1
-$controller_memory = 512
+$controller_memory = 1024
 $controller_cpus = 1
-$worker_memory = 512
+$worker_memory = 1024
 $worker_cpus = 1
 
 $num_etcd = 2
