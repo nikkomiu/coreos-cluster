@@ -20,7 +20,7 @@ $vm_gui = false
 
 $etcd_memory = 512
 $etcd_cpus = 1
-$controller_memory = 1024
+$controller_memory = 1536
 $controller_cpus = 1
 $worker_memory = 1024
 $worker_cpus = 1
@@ -146,6 +146,8 @@ Vagrant.configure("2") do |config|
 
       config.vm.provision :file, :source => "#{WORKER_CONFIG_PATH}", :destination => "/tmp/vagrantfile-user-data"
       config.vm.provision :shell, :inline => "mv /tmp/vagrantfile-user-data /var/lib/coreos-vagrant/", :privileged => true
+
+      config.vm.synced_folder "shared_data/", "/opt/external/"
     end
   end
 end
