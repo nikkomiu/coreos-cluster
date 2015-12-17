@@ -14,6 +14,11 @@ coreos:
   units:
   - name: etcd2.service
     command: start
+    drop-ins:
+    - name: 50-cleanup-data.conf
+      content: |
+        [Service]
+        ExecStartPre=-/usr/bin/rmdir /var/lib/etcd2/member
   - name: fleet.service
     command: start
   - name: flanneld.service
