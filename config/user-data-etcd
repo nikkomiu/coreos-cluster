@@ -3,15 +3,38 @@
 ---
 coreos:
   etcd2:
-    advertise-client-urls: http://$public_ipv4:2379
+    name: etcdserver
+    initial-cluster: etcdserver=http://$public_ipv4:2380
     initial-advertise-peer-urls: http://$public_ipv4:2380
-    listen-client-urls: http://0.0.0.0:2379
-    listen-peer-urls: http://$public_ipv4:2380
-    discovery: https://discovery.etcd.io/<token>
+    advertise-client-urls: http://$public_ipv4:2379
+    listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
+    listen-peer-urls: http://0.0.0.0:2380
   fleet:
     metadata: role=services
+  flannel:
+    interface: $public_ipv4
+    etcd_endpoints: http://127.0.0.1:2379
   units:
   - name: etcd2.service
     command: start
+    drop-ins:
+    - name: 50-cleanup-data.conf
+      content: |
+        [Service]
+        ExecStartPre=-/usr/bin/rmdir /var/lib/etcd2/member
   - name: fleet.service
     command: start
+  - name: flanneld.service
+    drop-ins:
+    - name: 50-network-config.conf
+      content: |
+        [Service]
+        ExecStartPre=/usr/bin/etcdctl set /coreos.com/network/config '{ "Network": "10.2.0.0/16", "Backend": { "Type":"vxlan" } }'
+    command: start
+  - name: docker.service
+    drop-ins:
+    - name: 40-flannel.conf
+      content: |
+        [Unit]
+        Requires=flanneld.service
+        After=flanneld.service
