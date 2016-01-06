@@ -17,10 +17,8 @@ abort("Kubernetes worker config not found!") unless File.exists?(WORKER_CONFIG_P
 # --- DEFAULT CONFIG PARAMETERS ---
 $vm_gui = false
 
-$etcd_memory = 512
+$etcd_memory = 2048
 $etcd_cpus = 1
-$controller_memory = 1536
-$controller_cpus = 1
 $worker_memory = 1024
 $worker_cpus = 1
 
