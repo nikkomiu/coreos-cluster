@@ -61,7 +61,7 @@ Vagrant.configure("2") do |config|
         vbox.cpus = $etcd_cpus
       end
 
-      ip = "172.17.8.#{i+100}"
+      ip = "172.17.8.#{i+150}"
       config.vm.network :private_network, ip: ip
 
       config.vm.provision :file, :source => "#{ETCD_CONFIG_PATH}", :destination => "/tmp/vagrantfile-user-data"
