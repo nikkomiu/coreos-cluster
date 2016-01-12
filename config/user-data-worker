@@ -4,6 +4,7 @@
 coreos:
   etcd2:
     proxy: on
+    name: etcdserver
     listen-client-urls: http://0.0.0.0:2379
     initial-cluster: etcdserver=http://172.17.8.151:2380
   fleet:
