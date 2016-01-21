@@ -28,7 +28,7 @@ $num_worker = 1
 $new_discovery = "https://discovery.etcd.io/new?size=#{$num_etcd}"
 $token = nil
 
-$core_channel = "alpha"
+$core_channel = "beta"
 $core_version = "current"
 # --- DEFAULT CONFIG PARAMETERS ---
 
