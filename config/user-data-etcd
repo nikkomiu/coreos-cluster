@@ -4,15 +4,15 @@
 coreos:
   etcd2:
     name: etcdserver
-    initial-cluster: etcdserver=http://$public_ipv4:2380
-    initial-advertise-peer-urls: http://$public_ipv4:2380
-    advertise-client-urls: http://$public_ipv4:2379,http://$private_ipv4:4001
+    initial-cluster: etcdserver=http://$private_ipv4:2380
+    initial-advertise-peer-urls: http://$private_ipv4:2380
+    advertise-client-urls: http://$private_ipv4:2379,http://$private_ipv4:4001
     listen-client-urls: http://0.0.0.0:2379,http://0.0.0.0:4001
     listen-peer-urls: http://0.0.0.0:2380,http://$private_ipv4:7001
   fleet:
     metadata: role=services
   flannel:
-    interface: $public_ipv4
+    interface: $private_ipv4
     etcd_endpoints: http://127.0.0.1:2379
   units:
   - name: etcd2.service

@@ -11,7 +11,7 @@ coreos:
     etcd_servers: http://localhost:2379
     metadata: role=workers
   flannel:
-    interface: $public_ipv4
+    interface: $private_ipv4
     etcd_endpoints: http://127.0.0.1:2379
   units:
   - name: etcd2.service
